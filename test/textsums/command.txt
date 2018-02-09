@@ -1,0 +1,18 @@
+python generate_questions.py --corpus=cnn --mode=download
+python generate_questions.py --corpus=cnn --mode=generate
+python generate_questions.py --corpus=cnn --mode=store
+python textsum_data_convert.py --command text_to_vocabulary --in_directories cnn/stories --out_files cnn-vocab
+python textsum_data_convert.py --command text_to_binary --in_directories cnn/stories --out_files cnn-train.bin,cnn-validation.bin,cnn-test.bin --split 0.8,0.15,0.05
+
+python generate_questions.py --corpus=dailymail --mode=download
+python generate_questions.py --corpus=dailymail --mode=generate
+python generate_questions.py --corpus=dailymail --mode=store
+python textsum_data_convert.py --command text_to_vocabulary --in_directories dailymail/stories --out_files dailymail-vocab
+python textsum_data_convert.py --command text_to_binary --in_directories dailymail/stories --out_files dailymail-train.bin,dailymail-validation.bin,dailymail-test.bin --split 0.8,0.15,0.05
+
+
+python seq2seq_attention.py --mode=train --article_key=article --abstract_key=abstract --data_path=data/cnn-train.bin --vocab_path=data/vocab --log_root=log_root --train_dir=log_root/train --truncate_input=True
+
+python seq2seq_attention.py --mode=train --article_key=article --abstract_key=abstract --data_path=data/bin_data_train --vocab_path=data/vocab2 --log_root=textsum/log_root --train_dir=textsum/log_root/train
+
+java -cp "C:\stanfordcorenlp\*" -Xmx2g edu.stanford.nlp.pipeline.StanfordCoreNLP -file input.txt

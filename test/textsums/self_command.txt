@@ -1,0 +1,12 @@
+data
+python data_convert_example.py --command text_to_binary --in_file data/text_data_train --out_file data/bin_data_train
+python data_convert_example.py --command text_to_binary --in_file data/text_data_test --out_file data/bin_data_test
+
+train
+python seq2seq_attention.py --mode=train --article_key=article --abstract_key=abstract --data_path=data/bin_data_train --vocab_path=data/vocab2 --log_root=log_root --train_dir=log_root/train
+
+eval
+python seq2seq_attention.py --mode=eval --article_key=article --abstract_key=abstract --data_path=data/bin_data_validation --vocab_path=data/vocab2 --log_root=log_root --train_dir=log_root/eval
+
+test
+python seq2seq_attention.py --mode=decode --article_key=article --abstract_key=abstract --data_path=data/bin_data_test --vocab_path=data/vocab2 --log_root=log_root --decode_dir=log_root/decode --beam_size=8
