@@ -1,0 +1,5 @@
+轉換成詞彙表
+python data_convert.py --command text_to_vocab --dataset_path data --out_file vocab --article_name transcript --abstract_name ppt
+
+將文件轉換成正規化格式(目前還有字元問題)
+python data_convert.py --command files_to_text --dataset_path data --out_file text_data --article_name transcript --abstract_name ppt
